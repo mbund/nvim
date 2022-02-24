@@ -78,7 +78,7 @@ telescope.setup {
 telescope.load_extension('fzf')
 telescope.load_extension('file_browser')
 
--- require('harpoon').setup({})
+require('harpoon').setup({})
 
 vim.cmd([[
 nnoremap <leader>ff <cmd> Telescope find_files<CR>
@@ -109,8 +109,53 @@ nnoremap <leader>d :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap <leader>f :lua require("harpoon.ui").nav_file(4)<CR>
 ]])
 
+require('nvim-lightbulb').setup({
+    -- LSP client names to ignore
+    -- Example: {"sumneko_lua", "null-ls"}
+    ignore = { 'null-ls' },
+    sign = {
+        enabled = true,
+        -- Priority of the gutter sign
+        priority = 10,
+    },
+    float = {
+        enabled = false,
+        -- Text to show in the popup float
+        text = "💡",
+        -- Available keys for window options:
+        -- - height     of floating window
+        -- - width      of floating window
+        -- - wrap_at    character to wrap at for computing height
+        -- - max_width  maximal width of floating window
+        -- - max_height maximal height of floating window
+        -- - pad_left   number of columns to pad contents at left
+        -- - pad_right  number of columns to pad contents at right
+        -- - pad_top    number of lines to pad contents at top
+        -- - pad_bottom number of lines to pad contents at bottom
+        -- - offset_x   x-axis offset of the floating window
+        -- - offset_y   y-axis offset of the floating window
+        -- - anchor     corner of float to place at the cursor (NW, NE, SW, SE)
+        -- - winblend   transparency of the window (0-100)
+        win_opts = {},
+    },
+    virtual_text = {
+        enabled = false,
+        -- Text to show at virtual text
+        text = "💡",
+        -- highlight mode to use for virtual text (replace, combine, blend), see :help nvim_buf_set_extmark() for reference
+        hl_mode = "replace",
+    },
+    status_text = {
+        enabled = false,
+        -- Text to provide when code actions are available
+        text = "💡",
+        -- Text to provide when no actions are available
+        text_unavailable = ""
+    }
+})
+
 -- bufferline
-require("bufferline").setup{
+require("bufferline").setup({
   highlights = {
     fill = {
       guibg = "#282828"
@@ -150,7 +195,7 @@ require("bufferline").setup{
       }
     }
   }
-}
+})
 
 -- nvim-tree
 require('nvim-tree').setup({})
@@ -353,14 +398,14 @@ autocmd filetype rust nnoremap <silent><leader>rg <cmd>lua require('rust-tools.c
 
 -- Python config
 lspconfig.pyright.setup({
-    capabilities = capabilities;
-    on_attach = default_on_attach;
+    capabilities = capabilities,
+    on_attach = default_on_attach,
 })
 
 -- Nix config
 lspconfig.rnix.setup({
-    capabilities = capabilities;
-    on_attach = default_on_attach;
+    capabilities = capabilities,
+    on_attach = default_on_attach,
 })
 vim.cmd([[
 autocmd filetype nix setlocal tabstop=2 shiftwidth=2 softtabstop=2
@@ -368,14 +413,33 @@ autocmd filetype nix setlocal tabstop=2 shiftwidth=2 softtabstop=2
 
 -- Clang config
 lspconfig.ccls.setup({
-    capabilities = capabilities;
-    on_attach = default_on_attach;
+    capabilities = capabilities,
+    on_attach = default_on_attach,
 })
 
 -- Go config
 lspconfig.gopls.setup({
-    capabilities = capabilities;
-    on_attach = default_on_attach;
+    capabilities = capabilities,
+    on_attach = default_on_attach,
+})
+
+-- Haskell config
+lspconfig.hls.setup({
+  capabilities = capabilities,
+  on_attach = default_on_attach,
+  settings = {
+    haskell = {
+      hlintOn = true,
+      formattingProvider = 'fourmolu',
+    }
+  }
+})
+
+-- Typescript config
+lspconfig.tsserver.setup({
+  capabilities = capabilities,
+  on_attach = default_on_attach,
+  root_dir = lspconfig_util.root_pattern('.git', 'tsconfig.json', 'jsconfig.json'),
 })
 
 -- Treesitter

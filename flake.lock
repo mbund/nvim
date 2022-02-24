@@ -122,11 +122,45 @@
         "type": "github"
       }
     },
+    "nvim-code-action-menu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1645439441,
+        "narHash": "sha256-P5U8E2QnBLxvyKBk2yxPW00iXgy9OpB3DbnUiH4qyVw=",
+        "owner": "weilbith",
+        "repo": "nvim-code-action-menu",
+        "rev": "b3671ef7a74912575d84b4dbc848fd3b6195b27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "weilbith",
+        "repo": "nvim-code-action-menu",
+        "type": "github"
+      }
+    },
+    "nvim-lightbulb": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1645713830,
+        "narHash": "sha256-LxGA2LX9CASodJnZYXGZfGPOeW38MW7z54gYQSDmhRE=",
+        "owner": "kosayoda",
+        "repo": "nvim-lightbulb",
+        "rev": "29ca81408119ba809d1f922edc941868af97ee86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kosayoda",
+        "repo": "nvim-lightbulb",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "nvim-code-action-menu": "nvim-code-action-menu",
+        "nvim-lightbulb": "nvim-lightbulb"
       }
     }
   },

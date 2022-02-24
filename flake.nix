@@ -10,7 +10,8 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-
+    nvim-lightbulb = { url = "github:kosayoda/nvim-lightbulb"; flake = false; };
+    nvim-code-action-menu = { url = "github:weilbith/nvim-code-action-menu"; flake = false; };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
@@ -78,7 +79,6 @@
               nodePackages.bash-language-server
               nodePackages.typescript-language-server
               nodePackages.vim-language-server
-
               python39Packages.autopep8
               python39Packages.flake8
               nodePackages.pyright
@@ -91,7 +91,11 @@
               lua53Packages.luacheck
               haskellPackages.fourmolu
             ];
-            start = with pkgs.vimPlugins;
+            start =
+              let
+                externalPlugin = pkgs.vimUtils.buildVimPluginFrom2Nix;
+              in
+              with pkgs.vimPlugins;
               [
                 # dependencies
                 plenary-nvim
@@ -105,10 +109,10 @@
                 telescope-nvim
                 telescope-fzf-native-nvim
                 telescope-file-browser-nvim
-                # harpoon
-                nvim-code-action-menu
+                harpoon
+                (externalPlugin { pname = "nvim-code-action-menu"; version = "master"; src = inputs.nvim-code-action-menu; })
+                (externalPlugin { pname = "nvim-lightbulb"; version = "master"; src = inputs.nvim-lightbulb; })
                 lsp_signature-nvim
-                nvim-lightbulb
                 vim-hexokinase
                 nvim-treesitter
                 nvim-treesitter-context
@@ -140,6 +144,7 @@
 
                 # lsp
                 nvim-lspconfig
+                nvim-lsputils
                 null-ls-nvim
                 cmp-nvim-lsp
 
