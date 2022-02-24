@@ -122,45 +122,11 @@
         "type": "github"
       }
     },
-    "plugin:gitsigns": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1644922901,
-        "narHash": "sha256-8GhjHKQOjiuA++mugHow8jDXhsaY922I6KwGlMu3kfE=",
-        "owner": "lewis6991",
-        "repo": "gitsigns.nvim",
-        "rev": "1d1f043acf025f919b8dd12bb672569109c7f099",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lewis6991",
-        "repo": "gitsigns.nvim",
-        "type": "github"
-      }
-    },
-    "plugin:onedark-vim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1634310286,
-        "narHash": "sha256-neKGGT+DLMyDMvWPWoiSQD31G1wfrMBGCWVuH14vmKc=",
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "rev": "e86ce939d85576fb7ce6c1c45fd49c8a570c24cc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "joshdick",
-        "repo": "onedark.vim",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
-        "nixpkgs": "nixpkgs_2",
-        "plugin:gitsigns": "plugin:gitsigns",
-        "plugin:onedark-vim": "plugin:onedark-vim"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },

@@ -10,52 +10,15 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-    "plugin:gitsigns" = { url = "github:lewis6991/gitsigns.nvim"; flake = false; };
-    "plugin:onedark-vim" = { url = "github:joshdick/onedark.vim"; flake = false; };
+
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pluginOverlay = final: prev:
-          let
-            inherit (prev.vimUtils) buildVimPluginFrom2Nix;
-            treesitterGrammars = prev.tree-sitter.withPlugins (_: prev.tree-sitter.allGrammars);
-            plugins = builtins.filter
-              (s: (builtins.match "plugin:.*" s) != null)
-              (builtins.attrNames inputs);
-            plugName = input:
-              builtins.substring
-                (builtins.stringLength "plugin:")
-                (builtins.stringLength input)
-                input;
-            buildPlug = name: buildVimPluginFrom2Nix {
-              pname = plugName name;
-              version = "master";
-              src = builtins.getAttr name inputs;
-
-              # Tree-sitter fails for a variety of lang grammars unless using :TSUpdate
-              # For now install imperatively
-              #postPatch =
-              #  if (name == "nvim-treesitter") then ''
-              #    rm -r parser
-              #    ln -s ${treesitterGrammars} parser
-              #  '' else "";
-            };
-          in
-          {
-            neovimPlugins = builtins.listToAttrs (map
-              (plugin: {
-                name = plugName plugin;
-                value = buildPlug plugin;
-              })
-              plugins);
-          };
-
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
-            pluginOverlay
             inputs.neovim-nightly-overlay.overlay
           ];
         };
@@ -63,6 +26,7 @@
         neovimBuilder =
           { package
           , customLua ? ""
+          , dir
           , extraPackages ? [ ]
           , start ? builtins.attrValues pkgs.neovimPlugins
           , opt ? [ ]
@@ -72,7 +36,7 @@
               configure = {
                 customRC = ''
                   " add our derivation's project root so we can use our lua
-                  set runtimepath^=${./.}
+                  set runtimepath^=${dir}
 
                   lua << EOF
                     ${customLua}
@@ -96,10 +60,98 @@
 
       in
       rec {
-        packages.nvim = neovimBuilder {
-          package = pkgs.neovim-nightly;
-          customLua = builtins.readFile ./init.lua;
-        };
+        packages.nvim = neovimBuilder
+          {
+            package = pkgs.neovim-nightly;
+            customLua = builtins.readFile ./init.lua;
+            dir = ./.;
+            extraPackages = with pkgs; [
+              neovim-remote
+              (tree-sitter.withPlugins (p: builtins.attrValues p)) # activiate all tree-sitter languages
+              xclip
+              ripgrep # required for telescope
+              fd # required for telescope
+
+              rnix-lsp
+              haskell-language-server
+              rust-analyzer
+              nodePackages.bash-language-server
+              nodePackages.typescript-language-server
+              nodePackages.vim-language-server
+
+              python39Packages.autopep8
+              python39Packages.flake8
+              nodePackages.pyright
+              rustfmt
+              nodePackages.eslint_d
+              stylua
+              clang
+              clang-tools
+              cppcheck
+              lua53Packages.luacheck
+              haskellPackages.fourmolu
+            ];
+            start = with pkgs.vimPlugins;
+              [
+                # dependencies
+                plenary-nvim
+                popup-nvim
+                nvim-web-devicons
+
+                # UI
+                onedark-vim
+                bufferline-nvim
+                nvim-tree-lua
+                telescope-nvim
+                telescope-fzf-native-nvim
+                telescope-file-browser-nvim
+                # harpoon
+                nvim-code-action-menu
+                lsp_signature-nvim
+                nvim-lightbulb
+                vim-hexokinase
+                nvim-treesitter
+                nvim-treesitter-context
+                gitsigns-nvim
+                lualine-nvim
+                trouble-nvim
+
+                # motions, remaps, text-editing improvements
+                vim-sneak
+                vim-commentary
+                vim-indent-object
+                vim-textobj-user
+                vim-sort-motion
+                vim-exchange
+                vim-unimpaired
+                vim-surround
+                vim-repeat
+                nvim-autopairs
+                vim-sleuth
+
+                # completion
+                nvim-cmp
+                cmp-buffer
+                luasnip
+                cmp_luasnip
+                lspkind-nvim
+                cmp-path
+                cmp-treesitter
+
+                # lsp
+                nvim-lspconfig
+                null-ls-nvim
+                cmp-nvim-lsp
+
+                # rust
+                crates-nvim
+                rust-tools-nvim
+
+                # web development
+                nvim-ts-autotag
+
+              ];
+          };
 
         apps.nvim = { type = "app"; program = "${packages.nvim}/bin/nvim"; };
 
