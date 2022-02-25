@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay = {
+    neovim-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -23,7 +23,7 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
-            inputs.neovim-nightly-overlay.overlay
+            inputs.neovim-overlay.overlay
           ];
         };
 
@@ -168,9 +168,27 @@
 
         defaultPackage = packages.nvim;
         defaultApp = apps.nvim;
+
+        devShell = pkgs.mkShell { buildInputs = [ packages.nvim ]; };
+
+        overlay = (self: super: {
+          inherit neovimBuilder;
+          neovimMB = packages.nvim;
+        });
       }
     );
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
