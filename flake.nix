@@ -8,7 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nvim-lightbulb = { url = "github:kosayoda/nvim-lightbulb"; flake = false; };
     nvim-code-action-menu = { url = "github:weilbith/nvim-code-action-menu"; flake = false; };
@@ -73,6 +76,7 @@
               ripgrep # required for telescope
               fd # required for telescope
 
+              sumneko-lua-language-server
               rnix-lsp
               haskell-language-server
               rust-analyzer
@@ -104,6 +108,7 @@
 
                 # UI
                 onedark-vim
+                tokyonight-nvim
                 bufferline-nvim
                 nvim-tree-lua
                 telescope-nvim
@@ -114,6 +119,7 @@
                 (externalPlugin { pname = "nvim-lightbulb"; version = "master"; src = inputs.nvim-lightbulb; })
                 lsp_signature-nvim
                 vim-hexokinase
+                nvim-cursorline
                 nvim-treesitter
                 nvim-treesitter-context
                 gitsigns-nvim
@@ -165,3 +171,26 @@
       }
     );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
