@@ -15,6 +15,7 @@
 
     nvim-lightbulb = { url = "github:kosayoda/nvim-lightbulb"; flake = false; };
     nvim-code-action-menu = { url = "github:weilbith/nvim-code-action-menu"; flake = false; };
+    startup-nvim = { url = "github:startup-nvim/startup.nvim"; flake = false; };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
@@ -109,6 +110,7 @@
                 # UI
                 onedark-vim
                 tokyonight-nvim
+                (externalPlugin { pname = "startup-nvim"; version = "master"; src = inputs.startup-nvim; })
                 bufferline-nvim
                 nvim-tree-lua
                 telescope-nvim
@@ -178,6 +180,8 @@
       }
     );
 }
+
+
 
 
 

@@ -50,17 +50,17 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
-          "neovim-nightly-overlay",
+          "neovim-overlay",
           "nixpkgs"
         ]
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1645561161,
-        "narHash": "sha256-agOYvqdbc4oH5oAvv2Wh/48zIxpCX52s3uShX4g3aQk=",
+        "lastModified": 1645930271,
+        "narHash": "sha256-9dqgGaIk6psLjv5Lmq0lyzSMBzI2IQ8a/h9Wwk2SlDw=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "11f7aeed7aa83d342d19897d9a69ba9f32ece7f7",
+        "rev": "8bf3a3e303dbefa47653964dd027074e804b418c",
         "type": "github"
       },
       "original": {
@@ -70,7 +70,7 @@
         "type": "github"
       }
     },
-    "neovim-nightly-overlay": {
+    "neovim-overlay": {
       "inputs": {
         "flake-compat": "flake-compat",
         "neovim-flake": "neovim-flake",
@@ -79,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1645604026,
-        "narHash": "sha256-qi6BQQF5EJQt7/tIqbumtC1J1zb7VfrbgTyvxLh9pcI=",
+        "lastModified": 1645949613,
+        "narHash": "sha256-R203mwxwBpKjX7DrYOeCKueif0nItLo9qK+Q+3qvBxQ=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "496babd7d3c535b895a8f989910aaa3e5b389044",
+        "rev": "40d48c8512ed9de3f381612b11be235e8d1728ed",
         "type": "github"
       },
       "original": {
@@ -143,10 +143,27 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "neovim-nightly-overlay": "neovim-nightly-overlay",
+        "neovim-overlay": "neovim-overlay",
         "nixpkgs": "nixpkgs",
         "nvim-code-action-menu": "nvim-code-action-menu",
-        "nvim-lightbulb": "nvim-lightbulb"
+        "nvim-lightbulb": "nvim-lightbulb",
+        "startup-nvim": "startup-nvim"
+      }
+    },
+    "startup-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1644087093,
+        "narHash": "sha256-TBkTfIcBX8LdnX5Cww/y5i4VBYOwqdIipSWYWY0JLGo=",
+        "owner": "startup-nvim",
+        "repo": "startup.nvim",
+        "rev": "d64c0599aada57f2d992418709dc4490c17641c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "startup-nvim",
+        "repo": "startup.nvim",
+        "type": "github"
       }
     }
   },
