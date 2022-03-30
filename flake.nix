@@ -72,6 +72,7 @@
           extraPackages = with pkgs; [
             neovim-remote
             (tree-sitter.withPlugins (p: builtins.attrValues p)) # activiate all tree-sitter languages
+            gcc # a c compiler is required for treesitter
             xclip
             ripgrep # required for telescope
             fd # required for telescope
@@ -155,6 +156,7 @@
           packages = with pkgs; [
             sumneko-lua-language-server
             stylua
+            lua53Packages.luacheck
             rnix-lsp
           ];
         };
