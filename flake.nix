@@ -2,7 +2,8 @@
   description = "Neovim IDE";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -97,12 +98,15 @@
               telescope-nvim
               telescope-fzf-native-nvim
               telescope-file-browser-nvim
+              telescope-ui-select-nvim
               harpoon
+              dressing-nvim
+              lspsaga-nvim
+              cheatsheet-nvim
               (externalPlugin { pname = "nvim-code-action-menu"; version = "master"; src = inputs.nvim-code-action-menu; })
               (externalPlugin { pname = "nvim-lightbulb"; version = "master"; src = inputs.nvim-lightbulb; })
               lsp_signature-nvim
               vim-hexokinase
-              nvim-cursorline
               nvim-treesitter
               nvim-treesitter-context
               gitsigns-nvim

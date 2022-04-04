@@ -13,7 +13,16 @@ local save_format = function(client)
 	end
 end
 
-local default_on_attach = function(client)
+local lsp_signature = require("lsp_signature")
+lsp_signature.setup({
+	bind = false,
+	floating_window = false,
+	hint_enable = true,
+	hint_prefix = "🐼 ",
+})
+
+local on_lsp_attach = function(client)
+	lsp_signature.on_attach()
 	save_format(client)
 end
 
@@ -39,7 +48,7 @@ autocmd filetype rust nnoremap <silent><leader>rg <cmd>lua require('rust-tools.c
 -- Python config
 lspconfig.pyright.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
 })
 
 -- Lua config
@@ -49,7 +58,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.sumneko_lua.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
 	settings = {
 		Lua = {
 			runtime = {
@@ -77,28 +86,34 @@ lspconfig.sumneko_lua.setup({
 -- Nix config
 lspconfig.rnix.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
 })
 vim.cmd([[
 autocmd filetype nix setlocal tabstop=2 shiftwidth=2 softtabstop=2
 ]])
 
--- Clang config
-lspconfig.ccls.setup({
+-- C/C++ config
+lspconfig.clangd.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
 })
 
 -- Go config
 lspconfig.gopls.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
+})
+
+-- Zig config
+lspconfig.zls.setup({
+	capabilities = capabilities,
+	on_attach = on_lsp_attach,
 })
 
 -- Haskell config
 lspconfig.hls.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
 	settings = {
 		haskell = {
 			hlintOn = true,
@@ -110,37 +125,37 @@ lspconfig.hls.setup({
 -- Typescript config
 lspconfig.tsserver.setup({
 	capabilities = capabilities,
-	on_attach = default_on_attach,
-	root_dir = lspconfig_util.root_pattern(".git", "tsconfig.json", "jsconfig.json"),
+	on_attach = on_lsp_attach,
+})
+
+-- eslint config
+lspconfig.eslint.setup({
+	capabilities = capabilities,
+	on_attach = on_lsp_attach,
 })
 
 -- Enable null-ls for fallback and unsupported LSPs
 local null_ls = require("null-ls")
+
+local null_ls_command_if_exists = function(params)
+	return vim.fn.executable(params.command) == 1 and params.command
+end
+
 null_ls.setup({
 	diagnostics_format = "[#{m}] #{s} (#{c})",
 	debounce = 250,
 	default_timeout = 5000,
-	on_attach = default_on_attach,
+	on_attach = on_lsp_attach,
 	sources = {
 		-- python
-		null_ls.builtins.formatting.autopep8,
-		null_ls.builtins.diagnostics.flake8,
+		null_ls.builtins.formatting.autopep8.with({ dynamic_command = null_ls_command_if_exists }),
+		null_ls.builtins.diagnostics.flake8.with({ dynamic_command = null_ls_command_if_exists }),
 
 		-- rust
-		null_ls.builtins.formatting.rustfmt,
-
-		-- javascript typescript
-		null_ls.builtins.formatting.eslint_d,
-		null_ls.builtins.diagnostics.eslint_d,
-		null_ls.builtins.code_actions.eslint_d,
+		-- null_ls.builtins.formatting.rustfmt.with({ dynamic_command = null_ls_command_if_exists }),
 
 		-- lua
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.diagnostics.luacheck,
-
-		-- C/C++
-		null_ls.builtins.formatting.clang_format,
-		null_ls.builtins.diagnostics.cppcheck,
+		null_ls.builtins.formatting.stylua.with({ dynamic_command = null_ls_command_if_exists }),
 	},
 })
 
@@ -223,25 +238,22 @@ cmp.setup({
 	},
 	formatting = {
 		format = function(entry, vim_item)
-			-- Kind icons
-			vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-			-- Source
+			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 			vim_item.menu = ({
-				buffer = "[Buffer]",
-				nvim_lsp = "[LSP]",
-				luasnip = "[LuaSnip]",
-				nvim_lua = "[Lua]",
-				latex_symbols = "[LaTeX]",
+				nvim_lsp = "",
+				luasnip = "",
+				path = "",
+				crates = "",
 			})[entry.source.name]
+
 			return vim_item
 		end,
 	},
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
-		{ name = "treesitter" },
-		{ name = "crates" },
 		{ name = "path" },
+		{ name = "crates" },
 	},
 })
 
