@@ -70,3 +70,7 @@ clang-tools
 cppcheck
 ```
 
+### zig
+```
+zls
+```
