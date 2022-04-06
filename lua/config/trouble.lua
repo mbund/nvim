@@ -48,5 +48,5 @@ require("trouble").setup({
 
 local utils = require("config/utils")
 
-utils.map("n", "<leader>xw", "<cmd> TroubleToggle workspace_diagnostics <CR>")
-utils.map("n", "<leader>xd", "<cmd> TroubleToggle document_diagnostics <CR>")
+utils.map("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<CR>")
+utils.map("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<CR>")

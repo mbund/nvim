@@ -97,4 +97,4 @@ require("nvim-tree").setup({
 
 local utils = require("config/utils")
 
-utils.map("n", "<A-n>", "<cmd> NvimTreeToggle <CR>")
+utils.map("n", "<A-n>", "<cmd>NvimTreeToggle<CR>")

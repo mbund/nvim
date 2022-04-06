@@ -5,12 +5,11 @@ end
 
 local save_format = function(client)
 	if client.resolved_capabilities.document_formatting then
-		vim.cmd("autocmd BufWritePre <buffer> lua require('editor').format()")
+		vim.cmd("autocmd BufWritePre <buffer> lua require('config/languages').format()")
 	end
 end
 
 local on_lsp_attach = function(client)
-	lsp_signature.on_attach()
 	save_format(client)
 end
 

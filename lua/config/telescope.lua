@@ -89,17 +89,17 @@ telescope.load_extension("ui-select")
 
 local utils = require("config/utils")
 
-utils.map("n", "<C-p>", "<cmd>lua require('config/telescope').project_files() <CR>")
-utils.map("n", "<leader>ff", "<cmd> Telescope find_files<CR>")
-utils.map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>")
-utils.map("n", "<leader>fb", "<cmd> Telescope buffers <CR>")
-utils.map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>")
-utils.map("n", "<leader>i", "<cmd> Telescope lsp_references<CR>")
-utils.map("n", "<leader>o", "<cmd> Telescope lsp_definitions <CR>")
-utils.map("n", "<leader>t", "<cmd> Telescope lsp_type_definitions <CR>")
-utils.map("n", "<leader>c", "<cmd> Telescope lsp_code_actions <CR>")
-utils.map("n", "<leader>fd", "<cmd> Telescope lsp_document_symbols <CR>")
-utils.map("n", "<leader>fw", "<cmd> Telescope lsp_workspace_symbols <CR>")
+utils.map("n", "<C-p>", "<cmd>lua require('config/telescope').project_files()<CR>")
+utils.map("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
+utils.map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
+utils.map("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
+utils.map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>")
+utils.map("n", "<leader>i", "<cmd>Telescope lsp_references<CR>")
+utils.map("n", "<leader>o", "<cmd>Telescope lsp_definitions<CR>")
+utils.map("n", "<leader>t", "<cmd>Telescope lsp_type_definitions<CR>")
+utils.map("n", "<leader>c", "<cmd>Telescope lsp_code_actions<CR>")
+utils.map("n", "<leader>fd", "<cmd>Telescope lsp_document_symbols<CR>")
+utils.map("n", "<leader>fw", "<cmd>Telescope lsp_workspace_symbols<CR>")
 
 return {
 	project_files = project_files,
