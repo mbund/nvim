@@ -1,4 +1,4 @@
-local utils = require("utils")
+local utils = require("config/utils")
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -18,17 +18,18 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes:1"
 vim.opt.encoding = "UTF-8"
 vim.opt.termguicolors = true
+vim.opt.pumheight = 10
 
 vim.cmd([[
 set undodir=~/.vim/undodir
 ]])
 
-vim.cmd([[
-" let g:tokyonight_style="storm"
-" colorscheme tokyonight
+-- vim.cmd([[
+-- " let g:tokyonight_style="storm"
+-- " colorscheme tokyonight
 
-colorscheme onedark
-]])
+-- colorscheme onedark
+-- ]])
 
 vim.cmd("set guicursor=")
 

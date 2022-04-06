@@ -45,7 +45,7 @@
                   set runtimepath^=${dir}
 
                   lua << EOF
-                    ${customLua}
+                    dofile("${./.}/lua/init.lua")
                   EOF
                 '';
                 packages.myVimPackage = with pkgs.neovimPlugins; {
@@ -68,7 +68,7 @@
       rec {
         packages.nvim = neovimBuilder {
           package = pkgs.neovim-nightly;
-          customLua = builtins.readFile ./init.lua;
+          customLua = builtins.readFile ./lua/init.lua;
           dir = ./.;
           extraPackages = with pkgs; [
             neovim-remote
@@ -90,7 +90,8 @@
               nvim-web-devicons
 
               # UI
-              onedark-vim
+              # onedark-vim
+              onedark-nvim
               tokyonight-nvim
               (externalPlugin { pname = "startup-nvim"; version = "master"; src = inputs.startup-nvim; })
               bufferline-nvim
@@ -101,7 +102,6 @@
               telescope-ui-select-nvim
               harpoon
               dressing-nvim
-              lspsaga-nvim
               cheatsheet-nvim
               (externalPlugin { pname = "nvim-code-action-menu"; version = "master"; src = inputs.nvim-code-action-menu; })
               (externalPlugin { pname = "nvim-lightbulb"; version = "master"; src = inputs.nvim-lightbulb; })
